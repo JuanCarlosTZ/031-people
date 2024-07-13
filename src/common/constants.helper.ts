@@ -1,0 +1,1 @@
+export const cedulaRegEx = /^[0-9]{11}$/;

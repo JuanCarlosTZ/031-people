@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { PeopleService } from './people.service';
 import { CreatePersonDto } from './dto/create-person.dto';
 import { UpdatePersonDto } from './dto/update-person.dto';
+import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id/parse-mongo-id.pipe';
 
 @Controller('people')
 export class PeopleController {
-  constructor(private readonly peopleService: PeopleService) {}
+  constructor(private readonly peopleService: PeopleService) { }
 
   @Post()
   create(@Body() createPersonDto: CreatePersonDto) {
@@ -17,18 +18,18 @@ export class PeopleController {
     return this.peopleService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.peopleService.findOne(+id);
+  @Get(':term')
+  findOne(@Param('term') term: string) {
+    return this.peopleService.findOne(term);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePersonDto: UpdatePersonDto) {
-    return this.peopleService.update(+id, updatePersonDto);
+    return this.peopleService.update(id, updatePersonDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.peopleService.remove(+id);
+  remove(@Param('id', ParseMongoIdPipe) id: string) {
+    return this.peopleService.remove(id);
   }
 }
