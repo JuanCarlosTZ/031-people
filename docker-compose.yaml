@@ -1,0 +1,13 @@
+version: '3'
+
+service:
+  db:
+    container_name: nest-people
+    image: mongo:5
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db
+    environment:
+      MONGODB_DATABASE: nest-people
